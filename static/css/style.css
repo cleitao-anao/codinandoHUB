@@ -1,0 +1,161 @@
+/* Estilos personalizados para o projeto Codinando */
+
+/* Animações */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilos gerais */
+body {
+    background-color: #f9fafb;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Cards de projeto */
+.project-card {
+    transition: all 0.3s ease;
+    transform: translateY(0);
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Botões */
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2563eb;
+}
+
+.btn-outline {
+    border: 1px solid #d1d5db;
+    color: #374151;
+}
+
+.btn-outline:hover {
+    background-color: #f9fafb;
+}
+
+/* Navegação */
+.nav-link {
+    padding: 0.5rem 1rem;
+    color: #4b5563;
+    transition: color 0.3s ease;
+    display: inline-block;
+}
+
+.nav-link:hover {
+    color: #3b82f6;
+}
+
+/* Responsividade */
+@media (max-width: 640px) {
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Efeito de hover nos cards */
+.hover-scale {
+    transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* Estilo para o botão de like */
+.like-btn {
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.like-btn:hover {
+    color: #ef4444;
+}
+
+.like-btn.liked {
+    color: #ef4444;
+}
+
+/* Estilo para o rodapé */
+footer {
+    margin-top: auto;
+}
+
+/* Estilos adicionais para melhorar a aparência */
+.prose {
+    max-width: 65ch;
+    line-height: 1.6;
+}
+
+.prose h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #111827;
+}
+
+.prose p {
+    margin-bottom: 1rem;
+}
+
+/* Estilos para o grid de projetos */
+.grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+/* Estilos para a seção de destaque */
+.featured-section {
+    margin-bottom: 3rem;
+}
+
+/* Estilos para os cards de projeto */
+.project-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.project-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-card .card-content {
+    padding: 1.25rem;
+}
+
+.project-card h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #111827;
+}
+
+.project-card .project-meta {
+    display: flex;
+    justify-content: space-between;
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}

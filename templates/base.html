@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Codinando - Descubra Nossos Projetos{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Cabeçalho -->
+    <header class="bg-white shadow-sm py-6 relative">
+        <!-- Link para a área administrativa (visível apenas para superusuários) -->
+        {% if user.is_authenticated and user.is_superuser %}
+        <div class="absolute top-4 right-4">
+            <a href="{% url 'admin:index' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                <i class="fas fa-cog mr-1"></i> Admin
+            </a>
+        </div>
+        {% endif %}
+        
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex justify-center mb-2">
+                <a href="{% url 'portfolio:home' %}" class="block">
+                    <div class="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
+                        <i class="fas fa-lightbulb text-3xl text-white"></i>
+                    </div>
+                </a>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-800">CODINANDO</h1>
+            <p class="text-gray-600 mt-2">Descubra os nossos projetos</p>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container mx-auto px-4 py-8">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; {% now "Y" %} Codinando. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+    {% block extra_js %}
+        <script src="{% static 'js/like.js' %}"></script>
+    {% endblock %}
+</body>
+</html>
