@@ -5,8 +5,8 @@
       "src": "codinando/wsgi.py",
       "use": "@vercel/python",
       "config": { 
-        "maxLambdaSize": "15mb",
-        "includeFiles": ["static/**", "media/**"]
+        "maxLambdaSize": "50mb",
+        "includeFiles": ["static/**", "media/**", "staticfiles/**"]
       }
     },
     {
@@ -33,7 +33,8 @@
     }
   ],
   "env": {
-    "PYTHONPATH": "/var/task"
+    "PYTHONPATH": "/var/task",
+    "DJANGO_SETTINGS_MODULE": "codinando.settings"
   },
-  "buildCommand": "python manage.py collectstatic --noinput"
+  "buildCommand": "mkdir -p staticfiles && python manage.py collectstatic --noinput"
 }
