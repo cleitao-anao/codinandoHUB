@@ -151,9 +151,23 @@ header {
 }
 
 .actions {
-    margin-top: auto;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: auto;
+    width: 100%;
+}
+
+.like-btn {
+    margin-right: auto; /* Empurra o botão para a esquerda */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.project-link {
+    margin-left: auto; /* Mantém o botão de ver projeto à direita */
 }
 
 .project-link {

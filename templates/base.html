@@ -7,7 +7,7 @@
     <title>{% block title %}CODINANDO projetos{% endblock %}</title>
     
     <!-- Favicons -->
-    <link rel="icon" href="{% static 'fotos/icon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'images/logo 1024x1024.png' %}" type="image/x-icon">
     <meta name="msapplication-config" content="browserconfig.xml">
     <meta name="theme-color" content="#0a0a0a">
     
@@ -22,71 +22,60 @@
     {% block extra_head %}{% endblock %}
     
     <style>
-        .loading-msg {
+        .loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             background-color: #0a0a0a;
-            color: white;
             z-index: 9999;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .loading-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 20px;
-            padding: 30px;
-            max-width: 100%;
         }
         
         .loading-logo {
-            width: 150px;
-            height: 150px;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: scale(0.9);
+            will-change: transform, opacity;
             object-fit: contain;
-            animation: pulse 2s infinite ease-in-out;
         }
         
-        .loading-text {
-            color: #ffffff;
-            font-size: 1.2rem;
-            margin: 15px 0;
+        .loading-bar-container {
+            width: 200px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
         }
         
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            border-top-color: #8a2be2;
-            animation: spin 1s ease-in-out infinite;
+        .loading-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #8a2be2, #6a5acd);
+            border-radius: 2px;
+            will-change: width;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        .hidden {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0s 0.5s;
         }
     </style>
 </head>
 <body>
     <!-- Loading Screen -->
-    <div id="loading-msg" class="loading-msg">
-        <div class="loading-content">
-            <img src="{% static 'fotos/logo 1024x1024.png' %}" alt="CODINANDO Logo" class="loading-logo">
-            <p class="loading-text">Carregando recursos, por favor aguarde...</p>
-            <div class="loading-spinner"></div>
+    <div id="loading-screen" class="loading-screen">
+        <img src="{% static 'images/logo 1024x1024.png' %}" alt="CODINANDO Logo" class="loading-logo">
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
         </div>
     </div>
 
@@ -94,7 +83,7 @@
     <div class="container hidden">
         <header>
             <div class="logo-container">
-                <img src="{% static 'fotos/logo 512x512.png' %}" alt="CODINANDO Logo" class="logo">
+                <img src="{% static 'images/logo 1024x1024.png' %}" alt="CODINANDO Logo" class="logo">
             </div>
             <p>Descubra os nossos projetos</p>
         </header>
@@ -116,25 +105,45 @@
     </div>
 
     <script>
-        // Esconde a mensagem de carregamento quando a página estiver pronta
-        window.addEventListener('load', function() {
-            // Pequeno atraso para garantir que tudo foi carregado
-            setTimeout(function() {
-                const loadingMsg = document.getElementById('loading-msg');
-                if (loadingMsg) {
-                    // Adiciona classe de fade out
-                    loadingMsg.style.transition = 'opacity 0.5s ease';
-                    loadingMsg.style.opacity = '0';
-                    
-                    // Remove o elemento após a animação
-                    setTimeout(function() {
-                        loadingMsg.style.display = 'none';
-                        // Mostra o conteúdo principal
-                        document.querySelector('.container').classList.remove('hidden');
-                        document.querySelector('.container').style.opacity = '1';
-                    }, 500);
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loading-screen');
+            const loadingLogo = document.querySelector('.loading-logo');
+            const loadingBar = document.querySelector('.loading-bar');
+            const container = document.querySelector('.container');
+            
+            // Animação de entrada da logo
+            gsap.to(loadingLogo, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.8,
+                ease: 'power2.out',
+                delay: 0.3
+            });
+            
+            // Animação da barra de carregamento
+            gsap.to(loadingBar, {
+                width: '100%',
+                duration: 2.5,
+                ease: 'power2.inOut',
+                delay: 0.5,
+                onComplete: function() {
+                    // Animação de saída
+                    gsap.to(loadingScreen, {
+                        opacity: 0,
+                        duration: 0.8,
+                        ease: 'power2.inOut',
+                        onComplete: function() {
+                            loadingScreen.style.display = 'none';
+                            container.classList.remove('hidden');
+                            gsap.to(container, {
+                                opacity: 1,
+                                duration: 0.8,
+                                ease: 'power2.out'
+                            });
+                        }
+                    });
                 }
-            }, 1000); // 1 segundo de atraso para garantir que tudo foi carregado
+            });
         });
     </script>
     
