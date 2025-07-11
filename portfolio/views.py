@@ -33,5 +33,5 @@ def like_project(request, slug):
     return JsonResponse({'likes': project.likes})
 
 def home(request):
-    featured_projects = Project.objects.all().order_by('-created_at')[:6]
+    featured_projects = Project.objects.all().order_by('-created_at')
     return render(request, 'portfolio/home.html', {'featured_projects': featured_projects})
