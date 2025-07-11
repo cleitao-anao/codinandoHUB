@@ -6,4 +6,6 @@ app_name = 'portfolio'
 urlpatterns = [
     path('', views.home, name='home'),
     path('hub/', views.ProjectListView.as_view(), name='hub'),
+    path('project/<int:project_id>/like/', views.like_project, name='like_project'),
+    path('project/<slug:slug>/', views.ProjectDetailView.as_view(), name='project_detail'),
 ]

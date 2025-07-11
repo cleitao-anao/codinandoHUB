@@ -1,44 +1,45 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Função para obter o token CSRF
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
+// Função para obter o token CSRF
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
             }
         }
-        return cookieValue;
     }
+    return cookieValue;
+}
 
+document.addEventListener('DOMContentLoaded', function() {
     // Adiciona o evento de like aos botões
     document.querySelectorAll('.like-btn').forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
             
             const projectId = this.getAttribute('data-project-id');
-            const likeCount = this.querySelector('.like-count') || this;
+            const likeCountElement = this.closest('.project-card').querySelector('.likes-count');
             const icon = this.querySelector('i');
             const isActive = this.classList.contains('active');
+            
+            // Se já estiver ativo, não faz nada
+            if (isActive) return;
             
             // Desabilita o botão temporariamente para evitar múltiplos cliques
             this.disabled = true;
             
             // Atualiza a UI imediatamente para feedback visual
-            if (!isActive) {
-                this.classList.add('active');
-                if (likeCount) {
-                    const currentLikes = parseInt(likeCount.textContent) || 0;
-                    likeCount.textContent = currentLikes + 1;
-                }
-                if (icon) {
-                    icon.classList.remove('fa-thumbs-up');
-                    icon.classList.add('fa-check');
-                }
+            this.classList.add('active');
+            if (likeCountElement) {
+                const currentLikes = parseInt(likeCountElement.textContent) || 0;
+                likeCountElement.textContent = currentLikes + 1;
+            }
+            if (icon) {
+                icon.classList.remove('fa-thumbs-up');
+                icon.classList.add('fa-check');
             }
             
             // Envia a requisição para o servidor
@@ -46,7 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken')
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 body: JSON.stringify({})
             })

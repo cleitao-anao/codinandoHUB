@@ -20,14 +20,14 @@
                     <div class="project-meta">
                         <span class="author">Por {{ project.author }}</span>
                         <div class="stats">
-                            <span><i class="fas fa-eye"></i> {{ project.views }}</span>
-                            <span><i class="fas fa-heart"></i> {{ project.likes }}</span>
+                            <span class="views"><i class="fas fa-eye"></i> {{ project.views }}</span>
+                            <span class="likes"><i class="fas fa-heart"></i> <span class="likes-count">{{ project.likes }}</span></span>
                         </div>
                     </div>
                     
                     <div class="actions">
-                        <button class="like-btn" data-project-id="{{ project.id }}">
-                            <i class="fas fa-thumbs-up"></i> Curtir
+                        <button class="like-btn" data-project-id="{{ project.id }}" {% if request.user.is_authenticated %}{% else %}title="Faça login para curtir" disabled{% endif %}>
+                            <i class="fas fa-thumbs-up"></i> {% if request.user.is_authenticated %}Curtir{% else %}Login para curtir{% endif %}
                         </button>
                         <a href="{{ project.access_link }}" class="project-link" target="_blank" rel="noopener noreferrer">
                             Ver Projeto <i class="fas fa-external-link-alt"></i>

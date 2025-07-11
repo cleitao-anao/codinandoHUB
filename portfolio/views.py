@@ -27,10 +27,13 @@ class ProjectDetailView(DetailView):
         return obj
 
 @require_POST
-def like_project(request, slug):
-    project = get_object_or_404(Project, slug=slug)
+def like_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
     project.increment_likes()
-    return JsonResponse({'likes': project.likes})
+    return JsonResponse({
+        'success': True,
+        'likes': project.likes
+    })
 
 def home(request):
     featured_projects = Project.objects.all().order_by('-created_at')
