@@ -37,8 +37,12 @@ class Project(models.Model):
         super().save(*args, **kwargs)
 
     def increment_views(self):
-        self.views += 1
-        self.save(update_fields=['views'])
+        # Usando F() para evitar condições de corrida
+        from django.db.models import F
+        # Atualiza diretamente no banco de dados
+        Project.objects.filter(pk=self.pk).update(views=F('views') + 1)
+        # Atualiza o objeto em memória com o valor correto
+        self.views = Project.objects.get(pk=self.pk).views
 
     def increment_likes(self):
         self.likes += 1

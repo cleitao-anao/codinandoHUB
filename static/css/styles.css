@@ -65,7 +65,7 @@ header {
 /* Project Card */
 .project-card {
     background: var(--card-bg);
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
     transition: var(--transition);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -74,6 +74,7 @@ header {
     display: flex;
     flex-direction: column;
     height: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .project-card.visible {
@@ -107,7 +108,7 @@ header {
 }
 
 .project-info {
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 1.5rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -115,8 +116,11 @@ header {
 
 .project-info h3 {
     color: var(--text-color);
-    margin-bottom: 0.8rem;
+    margin: 0 0 1.2rem 0;
     font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
 }
 
 .project-info p {

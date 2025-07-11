@@ -15,7 +15,6 @@
                 
                 <div class="project-info">
                     <h3>{{ project.title }}</h3>
-                    <p>{{ project.description|truncatewords:20 }}</p>
                     
                     <div class="project-meta">
                         <span class="author">Por {{ project.author }}</span>
@@ -29,7 +28,7 @@
                         <button class="like-btn" data-project-id="{{ project.id }}" {% if request.user.is_authenticated %}{% else %}title="Faça login para curtir" disabled{% endif %}>
                             <i class="fas fa-thumbs-up"></i> {% if request.user.is_authenticated %}Curtir{% else %}Login para curtir{% endif %}
                         </button>
-                        <a href="{{ project.access_link }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                        <a href="{{ project.access_link }}" class="project-link" data-project-id="{{ project.id }}" target="_blank" rel="noopener noreferrer">
                             Ver Projeto <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
@@ -44,6 +43,7 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script src="{% static 'js/project-views.js' %}"></script>
     <script>
         // Animação de entrada dos cards
         document.addEventListener('DOMContentLoaded', function() {

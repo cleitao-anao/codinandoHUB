@@ -23,7 +23,9 @@ class ProjectDetailView(DetailView):
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset=queryset)
-        obj.increment_views()
+        # Incrementa visualizações apenas se não for uma requisição AJAX
+        if not self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            obj.increment_views()
         return obj
 
 @require_POST
@@ -33,6 +35,17 @@ def like_project(request, project_id):
     return JsonResponse({
         'success': True,
         'likes': project.likes
+    })
+
+def register_project_view(request, project_id):
+    """View para registrar uma visualização do projeto."""
+    project = get_object_or_404(Project, id=project_id)
+    project.increment_views()
+    # Recarrega o projeto para obter o valor atualizado das visualizações
+    project.refresh_from_db()
+    return JsonResponse({
+        'success': True,
+        'views': project.views
     })
 
 def home(request):
